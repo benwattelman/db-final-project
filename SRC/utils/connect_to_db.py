@@ -6,8 +6,7 @@ database_username = database_password = database_name = 'DbMysql26'
 
 def mysql_connect():
     """Connect to a MySQL server using the SSH tunnel connection
-        TODO: make sure you have a running putty with the following command:
-            ssh -L 3305:mysqlsrv1.cs.tau.ac.il:3306 <user>@nova.cs.tau.ac.il
+        TODO: make sure you have a running putty with ssh tunnel
     :return connection: Global MySQL database connection
     """
 
