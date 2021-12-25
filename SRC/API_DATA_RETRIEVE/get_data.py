@@ -1,7 +1,7 @@
 import requests
-
 from utils.connect_to_db import mysql_connect, mysql_disconnect
-
+import aiohttp
+import asyncio
 db_code = "DbMysql26"
 
 example_tmdb_api_request = "https://api.themoviedb.org/3/movie/550?api_key=c722ee1702b642f1eb03bbbb186ea45b"
@@ -82,6 +82,7 @@ def insert_to_collections(movie, conn):
         except:
             print(f"failed to update {curr_movie_collection.get('name')} movie_collection")
 
+
 def add_genres(tmdb_api_key, conn):
     api_request = f"https://api.themoviedb.org/3/genre/movie/list?api_key={tmdb_api_key}&language=en-US"
     response = requests.get(api_request)
@@ -94,23 +95,28 @@ def add_genres(tmdb_api_key, conn):
     print(cursor.rowcount, "Record inserted successfully into genres table")
 
 
-def add_movie_related_info(tmdb_api_key, conn):
-    for movie_id in range(74, 20000): #STARTED FROM 62
-        api_request = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={tmdb_api_key}&language=en-US"
-        response = requests.get(api_request)
-        movie = response.json()
-        if not movie.get('id'):
-            continue
-        insert_to_collections(movie,conn)
-        insert_to_movies(movie, conn)
-        insert_to_movie_genres(movie, conn)
-        insert_production_company(movie, conn)
-        insert_production_country(movie,conn)
-        print(f"added movie {movie_id}")
+async def add_movie_related_info():
+    tmdb_api_key = "c722ee1702b642f1eb03bbbb186ea45b"
+    conn = mysql_connect()
+    async with aiohttp.ClientSession() as session:
+        for movie_id in range(62, 50000): #STARTED FROM 62
+            api_request = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={tmdb_api_key}&language=en-US"
+            async with session.get(api_request) as response:
+                movie = await response.json()
+                if not movie.get('id'):
+                    continue
+                insert_to_collections(movie, conn)
+                try:
+                    insert_to_movies(movie, conn)
+                except:
+                    print(f"failed to add movie {movie_id}")
+                    continue
+                insert_to_movie_genres(movie, conn)
+                insert_production_company(movie, conn)
+                insert_production_country(movie,conn)
+                print(f"added movie {movie_id}")
+    mysql_disconnect(conn)
 
 
 if __name__ == '__main__':
-    tmdb_api_key = "c722ee1702b642f1eb03bbbb186ea45b"
-    conn = mysql_connect()
-    add_movie_related_info(tmdb_api_key, conn)
-    mysql_disconnect(conn)
+    asyncio.run(add_movie_related_info())

@@ -1,42 +1,42 @@
-CREATE TABLE genres (
-	id int NOT NULL,
-    name VARCHAR(255),
-    PRIMARY KEY (id)
-    );
+-- CREATE TABLE genres (
+-- 	id int NOT NULL,
+--     name VARCHAR(255),
+--     PRIMARY KEY (id)
+--     );
 
-CREATE TABLE actors (
-	id int NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    imdb_id CHAR(9),
-    gender int NOT NULL,
-    check (gender >= 0),
-    check (gender < 4),
-    birthday VARCHAR(50),
-    deathday VARCHAR(50),
-    popularity float,
-    place_of_birth VARCHAR(255),
-    PRIMARY KEY (id)
-    );
+-- CREATE TABLE actors (
+-- 	id int NOT NULL,
+--     name VARCHAR(255) NOT NULL,
+--     imdb_id CHAR(9),
+--     gender int NOT NULL,
+--     check (gender >= 0),
+--     check (gender < 4),
+--     birthday VARCHAR(50),
+--     deathday VARCHAR(50),
+--     popularity float,
+--     place_of_birth VARCHAR(255),
+--     PRIMARY KEY (id)
+--     );
 
-CREATE TABLE production_companies (
-	id int NOT NULL,
-    name VARCHAR(255),
-    origin_country VARCHAR(255),
-    PRIMARY KEY (id)
-    );
-
-
-CREATE TABLE collections (
-	id int NOT NULL,
-    name VARCHAR(255),
-	PRIMARY KEY (id)
-    );
-
-CREATE TABLE production_countries (
-	iso_3166_1 VARCHAR(16) NOT NULL,
-    name VARCHAR(255),
-    PRIMARY KEY (iso_3166_1)
-    );
+-- CREATE TABLE production_companies (
+-- 	id int NOT NULL,
+--     name VARCHAR(255),
+--     origin_country VARCHAR(255),
+--     PRIMARY KEY (id)
+--     );
+--
+--
+-- -- CREATE TABLE collections (
+-- -- 	id int NOT NULL,
+-- --     name VARCHAR(255),
+-- -- 	PRIMARY KEY (id)
+-- --     );
+--
+-- CREATE TABLE production_countries (
+-- 	iso_3166_1 VARCHAR(16) NOT NULL,
+--     name VARCHAR(255),
+--     PRIMARY KEY (iso_3166_1)
+--     );
 
 
 CREATE TABLE movies (
