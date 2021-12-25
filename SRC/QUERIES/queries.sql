@@ -7,14 +7,14 @@ WHERE m.id = mpc.movie_id
 and pc.id = mpc.production_company_id
 and m.id = mg.movie_id
 and g.id = mg.genre_id
-GROUP BY g.id, pc.id as production_companies_popularity /*todo: validate this*/
+GROUP BY g.id, pc.id as production_companies_popularity --todo: validate this
 
 # query 3 - currently planned film across genres
 SELECT g.name as GENRE, count(*) as NUMBER_OF_PLANNED_MOVIES
-FROM movies as m, movies_genres as mg, genres as g
+FROM movies as m, movie_genres as mg, genres as g
 WHERE m.id = mg.movie_id
 and g.id = mg.genre_id
-and (m.status = "Planned" OR m.status = "In Production" OR m.status = "Post Production")
+and (m.status <> "Released") --todo: create index on m.status*/
 GROUP BY g.name
 
 # query 4 - best release months
