@@ -25,6 +25,13 @@ ORDER BY Month
 -- query 4 - sequel profitability
 
 -- query 5 - best filming countries
+SELECT pc.name as Country, (SUM(m.revenue) / COUNT(*)) as AverageRevenuePerMovie
+FROM movies as m, movies_production_countries as mpc, production_countries as pc
+WHERE m.id = mpc.movie_id and mpc.country_iso = pc.iso_3166_1 --todo: create indices on primary keys m.id and pc.iso_3166_1 like we said in doc? or is it redundant?
+GROUP BY (pc.name)
+HAVING SUM(m.revenue) > 0
+ORDER BY AverageRevenuePerMovie DESC
+LIMIT 50
 
 -- query 6 - should the catch phrase be a question?
 
