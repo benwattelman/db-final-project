@@ -35,4 +35,9 @@ LIMIT 50
 
 -- query 6 - should the catch phrase be a question?
 
--- query 7 - which budget size generates best marginal revenue
+-- query 7 - which budget size generates best marginal revenue todo: is this maybe too simple? no grouping or anything
+SELECT m.title as Title, m.budget as BudgetSize, ((m.revenue - m.budget) / m.budget) as MarginalRevenue
+FROM movies as m
+WHERE m.budget > 10000 --todo: create index on m.budget (and refer to it in doc)
+ORDER BY MarginalRevenue DESC
+LIMIT 10
