@@ -1,3 +1,4 @@
+--------------------------------------------------------------------------------
 -- query 1 - competition across genres
 SELECT genre, production_company, popularity
 FROM (
@@ -14,24 +15,56 @@ FROM (
 	) AS ranking_production_companies_genres
 WHERE ranking <= 3
 ORDER BY genre, production_company
+--------------------------------------------------------------------------------
 
+--------------------------------------------------------------------------------
 -- query 2 - currently planned film across genres
 SELECT g.name as GENRE, count(*) as NUMBER_OF_PLANNED_MOVIES
 FROM movies as m, movie_genres as mg, genres as g
 WHERE m.id = mg.movie_id
 and g.id = mg.genre_id
-and (m.status <> "Released") --todo: create index on m.status*/
+and (m.status <> "Released")
 GROUP BY g.name
 
+-- index creation:
+CREATE INDEX movie_statuses
+ON movies (status)
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
 -- query 3 - best release months
 SELECT MONTH(m.release_date) as Month, (COUNT(*) / 21) as AverageReleasesPerMonth
 FROM movies as m
 WHERE m.release_date >= "2000-01-01"
 GROUP BY MONTH(m.release_date)
 ORDER BY Month
+--------------------------------------------------------------------------------
 
+--------------------------------------------------------------------------------
 -- query 4 - sequel profitability
+SELECT collection_name, collection_size, first_movie, first_movie_vote_avg, collection_avg_votes
+FROM
+(SELECT m1.belongs_to_collection as collection_id, m1.title as first_movie, m1.votes_avg as first_movie_vote_avg
+FROM movies as m1
+WHERE m1.release_date = (
+	SELECT MIN(m2.release_date)
+    FROM movies as m2
+    WHERE m1.belongs_to_collection = m2.belongs_to_collection)
+) AS first_movie_per_collection,
+(SELECT c.id as collection_id, c.name as collection_name, AVG(m.votes_avg) as collection_avg_votes, count(*) as collection_size
+FROM movies as m, collections as c
+WHERE m.belongs_to_collection = c.id
+GROUP BY m.belongs_to_collection
+HAVING count(*) > 1) AS collections_averages
+WHERE first_movie_per_collection.collection_id = collections_averages.collection_id
+ORDER BY collection_avg_votes DESC
 
+-- index creation:
+CREATE INDEX movie_collections
+ON movies (belongs_to_collection)
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
 -- query 5 - best filming countries
 SELECT pc.name as Country, (SUM(m.revenue) / COUNT(*)) as AverageRevenuePerMovie
 FROM movies as m, movies_production_countries as mpc, production_countries as pc
@@ -40,12 +73,19 @@ GROUP BY (pc.name)
 HAVING SUM(m.revenue) > 0
 ORDER BY AverageRevenuePerMovie DESC
 LIMIT 50
+--------------------------------------------------------------------------------
 
+--------------------------------------------------------------------------------
 -- query 6 - should the catch phrase be a question?
 
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
 -- query 7 - which budget size generates best marginal revenue todo: is this maybe too simple? no grouping or anything
 SELECT m.title as Title, m.budget as BudgetSize, ((m.revenue - m.budget) / m.budget) as MarginalRevenue
 FROM movies as m
 WHERE m.budget > 10000 --todo: create index on m.budget (and refer to it in doc)
 ORDER BY MarginalRevenue DESC
 LIMIT 10
+--------------------------------------------------------------------------------
