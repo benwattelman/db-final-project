@@ -68,7 +68,7 @@ ON movies (belongs_to_collection)
 -- query 5 - best filming countries
 SELECT pc.name as Country, (SUM(m.revenue) / COUNT(*)) as AverageRevenuePerMovie
 FROM movies as m, movies_production_countries as mpc, production_countries as pc
-WHERE m.id = mpc.movie_id and mpc.country_iso = pc.iso_3166_1 --todo: create indices on primary keys m.id and pc.iso_3166_1 like we said in doc? or is it redundant?
+WHERE m.id = mpc.movie_id and mpc.country_iso = pc.iso_3166_1
 GROUP BY (pc.name)
 HAVING SUM(m.revenue) > 0
 ORDER BY AverageRevenuePerMovie DESC
@@ -100,8 +100,11 @@ ON movies(tagline)
 -- query 7 - which budget size generates best marginal revenue
 SELECT m.budget as BudgetSize, ((SUM(m.revenue) - (m.budget*count(*))) / (m.budget*count(*))) as MarginalRevenue
 FROM movies as m
-WHERE m.budget > 10000 --todo: create index on m.budget (and refer to it in doc)
+WHERE m.budget > 10000
 GROUP BY m.budget
 ORDER BY MarginalRevenue DESC
 LIMIT 10
+
+CREATE INDEX movie_budgets
+ON movies (budget)
 --------------------------------------------------------------------------------
