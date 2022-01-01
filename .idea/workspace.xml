@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94353c4b-6e9d-4eb9-b2ba-196b305778a9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/SRC/API_DATA_RETRIEVE/api_retrieval_and_db_updates.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SRC/QUERIES/python_implementation_of_queries.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/db-final-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/db-final-project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SRC/API_DATA_RETRIEVE/get_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SRC/CREATE_DB_SCRIPT/create_tables_queries.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SRC/CREATE_DB_SCRIPT/create_tables_queries.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +55,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="python_implementation_of_queries" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="queries" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="db-final-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -74,7 +68,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SRC/QUERIES/python_implementation_of_queries.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\ASUS\PycharmProjects\db-final-project\SRC\QUERIES\queries.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -121,6 +115,6 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/db_final_project$python_implementation_of_queries.coverage" NAME="python_implementation_of_queries Coverage Results" MODIFIED="1641042620214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SRC/QUERIES" />
+    <SUITE FILE_PATH="coverage/db_final_project$python_implementation_of_queries.coverage" NAME="python_implementation_of_queries Coverage Results" MODIFIED="1641043288861" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SRC/QUERIES" />
   </component>
 </project>

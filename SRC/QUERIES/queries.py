@@ -160,7 +160,9 @@ def optimize_budget_for_maximal_marginal_revenue(conn):
 
 if __name__ == '__main__':
     conn = mysql_connect()
-    query_functions = [competition_across_genres,currently_planned_films_across_genres,best_month_to_release_a_movie,sequel_profitability,best_filming_locations,should_the_catch_phrase_be_a_question,optimize_budget_for_maximal_marginal_revenue]
+    query_functions = [competition_across_genres, currently_planned_films_across_genres, best_month_to_release_a_movie,
+                       sequel_profitability, best_filming_locations, should_the_catch_phrase_be_a_question,
+                       optimize_budget_for_maximal_marginal_revenue]
     # RUN ALL QUERIES
     for query_function in query_functions:
         print(f"\n\n***{query_function.__name__} - Query Output***\n")
