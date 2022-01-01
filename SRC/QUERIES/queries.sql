@@ -46,8 +46,8 @@ SELECT collection_name, collection_size, first_movie, first_movie_vote_avg, coll
 FROM
 (SELECT m1.belongs_to_collection as collection_id, m1.title as first_movie, m1.votes_avg as first_movie_vote_avg
 FROM movies as m1
-WHERE m1.release_date = (
-	SELECT MIN(m2.release_date)
+WHERE m1.release_date <= ALL (
+	SELECT m2.release_date
     FROM movies as m2
     WHERE m1.belongs_to_collection = m2.belongs_to_collection)
 ) AS first_movie_per_collection,
@@ -82,10 +82,11 @@ LIMIT 50
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
--- query 7 - which budget size generates best marginal revenue todo: is this maybe too simple? no grouping or anything
-SELECT m.title as Title, m.budget as BudgetSize, ((m.revenue - m.budget) / m.budget) as MarginalRevenue
+-- query 7 - which budget size generates best marginal revenue
+SELECT m.budget as BudgetSize, ((SUM(m.revenue) - (m.budget*count(*))) / (m.budget*count(*))) as MarginalRevenue
 FROM movies as m
 WHERE m.budget > 10000 --todo: create index on m.budget (and refer to it in doc)
+GROUP BY m.budget
 ORDER BY MarginalRevenue DESC
 LIMIT 10
 --------------------------------------------------------------------------------
