@@ -1,4 +1,4 @@
-from utils.connect_to_db import mysql_connect, mysql_disconnect
+from UTILS.connect_to_db import mysql_connect, mysql_disconnect
 
 
 def create_indices_and_views(conn):

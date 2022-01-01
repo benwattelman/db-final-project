@@ -3,7 +3,7 @@ import asyncio
 import aiohttp
 import requests
 
-from utils.connect_to_db import mysql_connect, mysql_disconnect
+from UTILS.connect_to_db import mysql_connect, mysql_disconnect
 
 db_code = "DbMysql26"
 
