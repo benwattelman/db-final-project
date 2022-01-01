@@ -2,6 +2,13 @@ from utils.connect_to_db import mysql_connect, mysql_disconnect
 
 
 def create_indices_and_views(conn):
+    """
+    executes in our DB several create indices and create views
+    create index defaults to BTREE index and this is the index organization we chose
+    all these are made in order to optimize the queries we run on queries.py
+    :param conn: mysql connection to our DB
+    :return:
+    """
     cursor = conn.cursor()
     create_stmts = ["""CREATE INDEX movie_statuses ON movies (status)""",
                     """CREATE INDEX movie_collections ON movies (belongs_to_collection)""",
@@ -26,7 +33,8 @@ def create_indices_and_views(conn):
     conn.commit()
     cursor.close()
 
+
 if __name__ == '__main__':
     conn = mysql_connect()
-    create_indices_and_views(conn) # needed when running on a new DB. the DB we have already has them.
+    create_indices_and_views(conn)  # needed when running on a new DB. the DB we have already has them.
     mysql_disconnect(conn)
