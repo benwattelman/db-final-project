@@ -76,9 +76,24 @@ LIMIT 50
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
--- query 6 - should the catch phrase be a question?
+-- query 6 - should the catch phrase be a question or not?
+CREATE VIEW taglines_as_questions AS
+SELECT *
+FROM movies as m
+WHERE m.tagline LIKE 'When%?' OR m.tagline LIKE 'Where%?' OR m.tagline LIKE 'What%?' OR m.tagline LIKE 'How%?' OR m.tagline LIKE 'Who%?';
 
+CREATE VIEW taglines_not_questions AS
+(SELECT *
+FROM movies as m
+WHERE m.id NOT IN
+(SELECT taglines_as_questions.id
+FROM taglines_as_questions));
 
+SELECT AVG(tq.revenue) as tagline_questions_predicted_revenue, AVG(tnq.revenue) as tagline_non_questions_predicted_revenue
+FROM taglines_as_questions as tq, taglines_not_questions as tnq
+
+CREATE FULLTEXT INDEX taglineIndex
+ON movies(tagline)
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
