@@ -8,6 +8,12 @@ example_tmdb_api_request = "https://api.themoviedb.org/3/movie/550?api_key=c722e
 
 
 def insert_to_movies(movie, conn):
+    """
+    a function that takes a movie details dictionary and inserts to the movie table
+    :param movie:
+    :param conn:
+    :return:
+    """
     cursor = conn.cursor()
     movie_collection_id = movie.get('belongs_to_collection')
     movie_collection_id = movie_collection_id.get("id") if movie_collection_id else "NULL"
@@ -22,7 +28,7 @@ def insert_to_movies(movie, conn):
     '{movie.get('release_date')}', {movie.get('runtime',"NULL")},'{movie.get('tagline',"NULL")}')"""
     cursor.execute(insert_stmt)
     conn.commit()
-
+    cursor.close()
 
 def insert_production_country(movie, conn):
     cursor = conn.cursor()
@@ -40,7 +46,7 @@ def insert_production_country(movie, conn):
         insert_stmt = f"""INSERT IGNORE INTO DbMysql26.movies_production_countries (movie_id, country_iso) VALUES ({movie_id}, '{country['iso_3166_1']}')"""
         cursor.execute(insert_stmt)
         conn.commit()
-
+    cursor.close()
 
 def insert_production_company(movie, conn):
     cursor = conn.cursor()
@@ -58,6 +64,7 @@ def insert_production_company(movie, conn):
         insert_stmt = f"""INSERT IGNORE INTO DbMysql26.movies_production_companies (movie_id, production_company_id) VALUES ({movie_id}, {company['id']})"""
         cursor.execute(insert_stmt)
         conn.commit()
+    cursor.close()
 
 
 def insert_to_movie_genres(movie, conn):
@@ -68,6 +75,7 @@ def insert_to_movie_genres(movie, conn):
         insert_stmt = f"""INSERT IGNORE INTO DbMysql26.movie_genres (movie_id, genre_id) VALUES ({movie_id}, {genre['id']})"""
         cursor.execute(insert_stmt)
         conn.commit()
+    cursor.close()
 
 def insert_to_collections(movie, conn):
     cursor = conn.cursor()
@@ -81,7 +89,7 @@ def insert_to_collections(movie, conn):
             conn.commit()
         except:
             print(f"failed to update {curr_movie_collection.get('name')} movie_collection")
-
+    cursor.close()
 
 def add_genres(tmdb_api_key, conn):
     api_request = f"https://api.themoviedb.org/3/genre/movie/list?api_key={tmdb_api_key}&language=en-US"
@@ -93,7 +101,7 @@ def add_genres(tmdb_api_key, conn):
         cursor.execute(insert_stmt)
         conn.commit()
     print(cursor.rowcount, "Record inserted successfully into genres table")
-
+    cursor.close()
 
 async def add_movie_related_info():
     tmdb_api_key = "c722ee1702b642f1eb03bbbb186ea45b"
